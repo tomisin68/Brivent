@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brivent — The Infrastructure of Ambition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+  --deep:#03032d; --persian:#152bf9; --flamingo:#ff110b;
+  --chalk:#d7d7ff; --white-c:#efeeff;
+  --glass:rgba(21,43,249,.07); --gb:rgba(215,215,255,.10);
+  --fd:'Clash Display',sans-serif; --fb:'Bricolage Grotesque',sans-serif;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fb);background:var(--deep);color:var(--white-c);overflow-x:hidden;cursor:none;}
+
+/* CURSOR */
+#cur{position:fixed;width:10px;height:10px;background:var(--persian);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;mix-blend-mode:screen;}
+#curR{position:fixed;width:36px;height:36px;border:1px solid rgba(21,43,249,.45);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s;}
+
+/* CANVAS */
+#pc{position:fixed;inset:0;pointer-events:none;z-index:0;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:26px 72px;display:flex;align-items:center;justify-content:space-between;transition:all .35s;}
+nav.scrolled{background:rgba(3,3,45,.94);backdrop-filter:blur(22px);padding:16px 72px;border-bottom:1px solid rgba(215,215,255,.08);}
+.n-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.n-logo img{width:36px;height:36px;object-fit:contain;}
+.n-logo-svg{width:36px;height:36px;flex-shrink:0;}
+.n-word{font-family:var(--fd);font-weight:700;font-size:1.28rem;color:var(--white-c);letter-spacing:-.02em;}
+.n-links{display:flex;align-items:center;gap:38px;list-style:none;}
+.n-links a{text-decoration:none;color:rgba(239,238,255,.6);font-size:.88rem;transition:color .2s;cursor:none;}
+.n-links a:hover{color:var(--white-c);}
+.n-cta{padding:10px 22px;background:var(--persian);color:white!important;border-radius:7px;font-weight:500!important;transition:all .2s ease!important;}
+.n-cta:hover{background:#2a3fff!important;box-shadow:0 8px 22px rgba(21,43,249,.35);}
+
+/* HAMBURGER */
+.ham{display:none;flex-direction:column;justify-content:center;gap:5px;cursor:pointer;padding:6px;background:none;border:none;width:36px;height:36px;}
+.ham span{display:block;width:22px;height:2px;background:var(--white-c);border-radius:2px;transition:all .3s;transform-origin:center;}
+.ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.ham.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+/* MOBILE OVERLAY */
+.mob{display:none;position:fixed;inset:0;background:rgba(3,3,45,.98);backdrop-filter:blur(24px);z-index:190;flex-direction:column;align-items:center;justify-content:center;gap:32px;}
+.mob.open{display:flex;}
+.mob a{font-family:var(--fd);font-size:2rem;font-weight:700;color:var(--white-c);text-decoration:none;cursor:none;transition:color .2s;opacity:0;transform:translateY(18px);}
+.mob.open a{animation:mfade .35s ease forwards;}
+.mob.open a:nth-child(1){animation-delay:.04s}
+.mob.open a:nth-child(2){animation-delay:.09s}
+.mob.open a:nth-child(3){animation-delay:.14s}
+.mob.open a:nth-child(4){animation-delay:.19s}
+.mob.open a:nth-child(5){animation-delay:.24s}
+.mob a:hover{color:var(--persian);}
+.mob-soc{display:flex;gap:14px;margin-top:10px;opacity:0;transform:translateY(10px);}
+.mob.open .mob-soc{animation:mfade .35s .3s ease forwards;}
+.mob-soc a{width:42px;height:42px;border:1px solid rgba(215,215,255,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;color:rgba(215,215,255,.6);font-size:.88rem;text-decoration:none;transition:all .2s;opacity:1!important;transform:none!important;animation:none!important;}
+.mob-soc a:hover{border-color:rgba(21,43,249,.45);color:white;}
+@keyframes mfade{to{opacity:1;transform:none}}
+
+/* HELPERS */
+.container{max-width:1180px;margin:0 auto;padding:0 64px;}
+.stag{font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--persian);display:flex;align-items:center;gap:10px;margin-bottom:18px;}
+.stag::before{content:'';width:22px;height:1px;background:var(--persian);}
+.sec-h{font-family:var(--fd);font-size:clamp(1.9rem,3.2vw,2.9rem);font-weight:700;line-height:1.12;letter-spacing:-.02em;color:var(--white-c);}
+.sec-h .acc{color:var(--persian);} .sec-h .red{color:var(--flamingo);}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .62s ease,transform .62s ease;}
+.reveal.vis{opacity:1;transform:none;}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
+.divider{height:1px;background:linear-gradient(to right,transparent,rgba(215,215,255,.09),transparent);margin:0 64px;}
+
+/* BTNS */
+.bp{padding:13px 28px;background:var(--persian);color:white;text-decoration:none;border-radius:8px;font-weight:500;font-size:.9rem;display:inline-flex;align-items:center;gap:8px;transition:all .25s;cursor:none;border:none;font-family:var(--fb);}
+.bp:hover{background:#2a3fff;transform:translateY(-2px);box-shadow:0 12px 28px rgba(21,43,249,.38);}
+.bg{padding:13px 28px;background:transparent;color:var(--white-c);text-decoration:none;border-radius:8px;font-weight:400;font-size:.9rem;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--gb);transition:all .25s;cursor:none;}
+.bg:hover{border-color:rgba(215,215,255,.3);background:rgba(215,215,255,.05);transform:translateY(-2px);}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:120px 72px 0;z-index:1;overflow:hidden;}
+.hi{max-width:660px;position:relative;z-index:2;}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border:1px solid rgba(215,215,255,.12);border-radius:100px;font-size:.7rem;color:var(--chalk);letter-spacing:.08em;text-transform:uppercase;margin-bottom:26px;background:rgba(21,43,249,.1);animation:fsup .7s ease forwards;opacity:0;}
+.bdot{width:6px;height:6px;background:var(--flamingo);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+.hero h1{font-family:var(--fd);font-size:clamp(2.5rem,4.5vw,4.2rem);font-weight:700;line-height:1.06;letter-spacing:-.025em;color:var(--white-c);animation:fsup .7s .12s ease forwards;opacity:0;}
+.hero h1 .acc{color:var(--persian);} .hero h1 .red{color:var(--flamingo);}
+.hero-sub{margin-top:22px;font-size:.97rem;line-height:1.76;color:rgba(215,215,255,.63);max-width:490px;animation:fsup .7s .24s ease forwards;opacity:0;}
+.ha{margin-top:38px;display:flex;gap:13px;flex-wrap:wrap;animation:fsup .7s .36s ease forwards;opacity:0;}
+.hstats{margin-top:62px;display:flex;gap:42px;flex-wrap:wrap;animation:fsup .7s .5s ease forwards;opacity:0;}
+.stat{border-left:2px solid var(--persian);padding-left:15px;}
+.stn{font-family:var(--fd);font-size:1.65rem;font-weight:700;line-height:1;}
+.stn span{color:var(--persian);}
+.stl{font-size:.74rem;color:rgba(215,215,255,.48);margin-top:4px;letter-spacing:.04em;}
+.hbg{position:absolute;right:-50px;top:50%;transform:translateY(-50%);width:500px;height:500px;opacity:.08;pointer-events:none;animation:flt 9s ease-in-out infinite;}
+@keyframes flt{0%,100%{transform:translateY(-50%)}50%{transform:translateY(-52%)}}
+.sh{position:absolute;bottom:34px;left:72px;display:flex;align-items:center;gap:12px;font-size:.7rem;color:rgba(215,215,255,.33);letter-spacing:.1em;text-transform:uppercase;animation:fsup .7s .65s ease forwards;opacity:0;z-index:2;}
+.sl{width:44px;height:1px;background:linear-gradient(to right,var(--persian),transparent);overflow:hidden;position:relative;}
+.sl::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:white;animation:ss 2s ease-in-out infinite;}
+@keyframes ss{0%{left:-100%}100%{left:100%}}
+@keyframes fsup{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+/* ABOUT */
+.ab-sec{padding:120px 0;}
+.ab-grid{display:grid;grid-template-columns:1fr 1fr;gap:76px;align-items:center;margin-top:52px;}
+.ab-body p{font-size:.95rem;line-height:1.82;color:rgba(215,215,255,.63);margin-bottom:16px;}
+.ab-body p strong{color:var(--white-c);font-weight:500;}
+.vals{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.val{padding:24px 20px;border:1px solid var(--gb);border-radius:13px;background:var(--glass);backdrop-filter:blur(10px);transition:all .3s;cursor:none;}
+.val:hover{border-color:rgba(21,43,249,.4);background:rgba(21,43,249,.12);transform:translateY(-4px);}
+.val:nth-child(2),.val:nth-child(4){margin-top:18px;}
+.v-ico{width:36px;height:36px;background:rgba(21,43,249,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:.88rem;color:var(--chalk);}
+.val h4{font-family:var(--fd);font-size:.9rem;font-weight:600;color:var(--white-c);margin-bottom:5px;}
+.val p{font-size:.78rem;line-height:1.6;color:rgba(215,215,255,.48);}
+
+/* SERVICES */
+.sv-sec{padding:120px 0;background:linear-gradient(180deg,transparent 0%,rgba(21,43,249,.04) 50%,transparent 100%);}
+.sv-head{max-width:540px;margin-bottom:60px;}
+.sv-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--gb);border-radius:16px;overflow:hidden;}
+.sv-item{padding:42px 30px;background:rgba(6,6,31,.65);border-right:1px solid var(--gb);transition:background .3s;cursor:none;}
+.sv-item:last-child{border-right:none;}
+.sv-item:hover{background:rgba(21,43,249,.09);}
+.sv-n{font-size:.67rem;font-weight:600;letter-spacing:.15em;color:rgba(21,43,249,.55);margin-bottom:20px;}
+.sv-ico{width:48px;height:48px;border:1px solid rgba(21,43,249,.28);border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:1.05rem;color:var(--chalk);background:rgba(21,43,249,.08);transition:all .3s;}
+.sv-item:hover .sv-ico{background:rgba(21,43,249,.2);border-color:rgba(21,43,249,.55);box-shadow:0 0 16px rgba(21,43,249,.25);}
+.sv-item h3{font-family:var(--fd);font-size:1rem;font-weight:600;color:var(--white-c);margin-bottom:9px;}
+.sv-item p{font-size:.83rem;line-height:1.72;color:rgba(215,215,255,.5);}
+.sv-more{margin-top:22px;display:inline-flex;align-items:center;gap:6px;font-size:.77rem;color:var(--persian);opacity:0;transform:translateX(-5px);transition:all .3s;}
+.sv-item:hover .sv-more{opacity:1;transform:none;}
+
+/* PRODUCTS */
+.pr-sec{padding:120px 0;}
+.pr-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:60px;flex-wrap:wrap;gap:22px;}
+.pr-sub{max-width:290px;font-size:.86rem;line-height:1.72;color:rgba(215,215,255,.5);}
+.pr-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.pc{border:1px solid var(--gb);border-radius:16px;overflow:hidden;background:rgba(6,6,31,.82);transition:all .4s;cursor:none;position:relative;}
+.pc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--persian),transparent);opacity:0;transition:.3s;}
+.pc:hover{transform:translateY(-8px);border-color:rgba(21,43,249,.3);box-shadow:0 26px 52px rgba(0,0,0,.45);}
+.pc:hover::before{opacity:1;}
+.pc.feat{border-color:rgba(21,43,249,.24);background:linear-gradient(135deg,rgba(21,43,249,.1) 0%,rgba(6,6,31,.95) 60%);}
+.pt{padding:30px 30px 0;display:flex;align-items:flex-start;justify-content:space-between;}
+/* product image logo */
+.pli{width:50px;height:50px;border-radius:13px;object-fit:contain;background:rgba(21,43,249,.15);border:1px solid rgba(21,43,249,.25);padding:6px;}
+/* icon fallback */
+.pif{width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+.ib{background:rgba(21,43,249,.18);border:1px solid rgba(21,43,249,.3);color:#7b93ff;}
+.ir{background:rgba(255,17,11,.13);border:1px solid rgba(255,17,11,.28);color:#ff7a75;}
+.iv{background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.3);color:#c4b5fd;}
+.pb2{padding:4px 11px;border-radius:100px;font-size:.68rem;font-weight:500;letter-spacing:.04em;}
+.live{background:rgba(21,43,249,.14);color:var(--chalk);border:1px solid rgba(21,43,249,.28);}
+.build{background:rgba(255,17,11,.09);color:#ff8b87;border:1px solid rgba(255,17,11,.22);}
+.beta{background:rgba(139,92,246,.13);color:#c4b5fd;border:1px solid rgba(139,92,246,.28);}
+.pb{padding:20px 30px 30px;}
+.pb h3{font-family:var(--fd);font-size:1.15rem;font-weight:600;color:var(--white-c);margin-bottom:9px;letter-spacing:-.01em;}
+.pb p{font-size:.85rem;line-height:1.72;color:rgba(215,215,255,.55);margin-bottom:22px;}
+.ptgs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:22px;}
+.ptg{padding:3px 10px;background:rgba(215,215,255,.05);border:1px solid rgba(215,215,255,.09);border-radius:100px;font-size:.7rem;color:rgba(215,215,255,.48);}
+.plk{display:inline-flex;align-items:center;gap:6px;font-size:.82rem;color:var(--persian);text-decoration:none;font-weight:500;transition:gap .2s;cursor:none;}
+.plk:hover{gap:10px;}
+
+/* VISION */
+.vi-sec{padding:110px 0;background:linear-gradient(135deg,rgba(21,43,249,.09) 0%,transparent 60%);border-top:1px solid var(--gb);border-bottom:1px solid var(--gb);}
+.vi-grid{display:grid;grid-template-columns:1fr 1fr;gap:76px;align-items:center;}
+.vi-l h2{font-family:var(--fd);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;line-height:1.15;letter-spacing:-.02em;color:var(--white-c);margin-bottom:20px;}
+.vi-l p{font-size:.95rem;line-height:1.78;color:rgba(215,215,255,.6);}
+.mis{display:flex;flex-direction:column;gap:16px;}
+.mi{padding:22px 24px;border:1px solid var(--gb);border-radius:13px;background:rgba(6,6,31,.55);display:flex;gap:16px;align-items:flex-start;transition:all .3s;}
+.mi:hover{border-color:rgba(21,43,249,.28);background:rgba(21,43,249,.08);}
+.mi-ico{width:40px;height:40px;min-width:40px;background:rgba(21,43,249,.15);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--chalk);}
+.mi-b h4{font-family:var(--fd);font-size:.9rem;font-weight:600;color:var(--white-c);margin-bottom:4px;}
+.mi-b p{font-size:.8rem;line-height:1.6;color:rgba(215,215,255,.48);}
+
+/* CONTACT */
+.ct-sec{padding:120px 0;}
+.ct-grid{display:grid;grid-template-columns:1fr 1fr;gap:76px;align-items:start;margin-top:52px;}
+.ct-l h3{font-family:var(--fd);font-size:1.4rem;font-weight:600;color:var(--white-c);margin-bottom:13px;}
+.ct-l>p{font-size:.92rem;line-height:1.76;color:rgba(215,215,255,.56);margin-bottom:36px;}
+.ci{display:flex;align-items:center;gap:13px;margin-bottom:16px;}
+.ci-i{width:40px;height:40px;background:rgba(21,43,249,.14);border:1px solid rgba(21,43,249,.24);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.88rem;color:var(--chalk);flex-shrink:0;}
+.ci-t span{display:block;font-size:.69rem;color:rgba(215,215,255,.36);letter-spacing:.07em;text-transform:uppercase;margin-bottom:2px;}
+.ci-t a,.ci-t p{font-size:.9rem;color:var(--white-c);text-decoration:none;transition:color .2s;}
+.ci-t a:hover{color:var(--persian);}
+.rb{margin-top:32px;padding:22px;border:1px solid var(--gb);border-radius:13px;background:rgba(21,43,249,.06);}
+.rb p{font-size:.82rem;color:rgba(215,215,255,.62);line-height:1.7;}
+.rb strong{color:var(--white-c);display:block;margin-bottom:5px;font-weight:500;}
+.cf{padding:36px;border:1px solid var(--gb);border-radius:16px;background:rgba(6,6,31,.76);backdrop-filter:blur(12px);}
+.cf h4{font-family:var(--fd);font-weight:600;font-size:1rem;color:var(--white-c);margin-bottom:24px;}
+.fg{margin-bottom:16px;}
+.fg label{display:block;font-size:.74rem;font-weight:500;color:rgba(215,215,255,.52);margin-bottom:6px;letter-spacing:.04em;}
+.fg input,.fg textarea,.fg select{width:100%;padding:12px 15px;background:rgba(215,215,255,.04);border:1px solid rgba(215,215,255,.1);border-radius:8px;color:var(--white-c);font-family:var(--fb);font-size:.88rem;outline:none;transition:all .2s;-webkit-appearance:none;}
+.fg select option{background:var(--deep);}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:rgba(21,43,249,.5);background:rgba(21,43,249,.06);box-shadow:0 0 0 3px rgba(21,43,249,.1);}
+.fg textarea{resize:vertical;min-height:108px;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.sb{width:100%;padding:14px;background:var(--persian);color:white;border:none;border-radius:8px;font-family:var(--fd);font-size:.9rem;font-weight:600;cursor:none;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;}
+.sb:hover{background:#2a3fff;transform:translateY(-2px);box-shadow:0 12px 28px rgba(21,43,249,.38);}
+
+/* FOOTER */
+footer{padding:56px 0 34px;border-top:1px solid var(--gb);position:relative;z-index:1;}
+.ft{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:44px;margin-bottom:48px;}
+.fb p{font-size:.83rem;line-height:1.72;color:rgba(215,215,255,.4);margin-top:13px;max-width:240px;}
+.fc h5{font-family:var(--fd);font-size:.7rem;font-weight:600;color:rgba(215,215,255,.36);letter-spacing:.13em;text-transform:uppercase;margin-bottom:16px;}
+.fc ul{list-style:none;}
+.fc li{margin-bottom:10px;}
+.fc li a{text-decoration:none;font-size:.84rem;color:rgba(215,215,255,.5);transition:color .2s;cursor:none;}
+.fc li a:hover{color:var(--white-c);}
+.ftb{display:flex;align-items:center;justify-content:space-between;padding-top:26px;border-top:1px solid rgba(215,215,255,.05);flex-wrap:wrap;gap:12px;}
+.ftb p{font-size:.76rem;color:rgba(215,215,255,.26);}
+.ftb p span{color:var(--flamingo);}
+.soc{display:flex;gap:9px;}
+.soc a{width:32px;height:32px;border:1px solid rgba(215,215,255,.09);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:rgba(215,215,255,.48);text-decoration:none;transition:all .2s;cursor:none;}
+.soc a:hover{border-color:rgba(21,43,249,.4);background:rgba(21,43,249,.14);color:var(--white-c);transform:translateY(-2px);}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  nav,nav.scrolled{padding-left:36px;padding-right:36px;}
+  .hero{padding:120px 36px 0;}
+  .container{padding:0 36px;}
+  .divider{margin:0 36px;}
+  .hbg{width:360px;height:360px;right:-40px;}
+  .ab-grid,.vi-grid{grid-template-columns:1fr;gap:44px;}
+  .ft{grid-template-columns:1fr 1fr;gap:32px;}
+}
+@media(max-width:768px){
+  nav{padding:18px 22px;}
+  nav.scrolled{padding:14px 22px;}
+  .n-links{display:none;}
+  .ham{display:flex;}
+  .hero{padding:96px 22px 0;}
+  .container{padding:0 22px;}
+  .divider{margin:0 22px;}
+  .hbg{display:none;}
+  .hstats{gap:22px;}
+  .sh{left:22px;}
+  .ab-sec,.sv-sec,.pr-sec,.ct-sec{padding:76px 0;}
+  .vals{grid-template-columns:1fr 1fr;}
+  .val:nth-child(2),.val:nth-child(4){margin-top:0;}
+  .sv-grid{grid-template-columns:1fr;}
+  .sv-item{border-right:none;border-bottom:1px solid var(--gb);}
+  .sv-item:last-child{border-bottom:none;}
+  .pr-grid{grid-template-columns:1fr;}
+  .pr-head{flex-direction:column;align-items:flex-start;}
+  .ct-grid{grid-template-columns:1fr;gap:44px;}
+  .frow{grid-template-columns:1fr;}
+  .ft{grid-template-columns:1fr;gap:26px;}
+  .vi-sec{padding:70px 0;}
+}
+@media(max-width:480px){
+  .hero h1{font-size:2.15rem;}
+  .vals{grid-template-columns:1fr;}
+  .val:nth-child(2),.val:nth-child(4){margin-top:0;}
+  .stn{font-size:1.4rem;}
+  .bp,.bg{padding:11px 20px;font-size:.86rem;}
+  .cf{padding:24px 18px;}
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="curR"></div>
+<canvas id="pc"></canvas>
+
+<!-- MOBILE NAV -->
+<div class="mob" id="mob">
+  <a href="#home"     onclick="closeMob()">Home</a>
+  <a href="#about"    onclick="closeMob()">About</a>
+  <a href="#services" onclick="closeMob()">What We Do</a>
+  <a href="#products" onclick="closeMob()">Products</a>
+  <a href="#contact"  onclick="closeMob()">Contact</a>
+  <div class="mob-soc">
+    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#home" class="n-logo">
+    <!-- Replace logo.png with your actual path -->
+    <img src="logo.png" alt="Brivent" id="navLogoImg"
+         onerror="this.style.display='none';document.getElementById('navLogoSvg').style.display='block'">
+    <svg id="navLogoSvg" class="n-logo-svg" style="display:none" viewBox="0 0 48 48" fill="none">
+      <path d="M24 4L8 12V26C8 34.8 15.2 43 24 46C32.8 43 40 34.8 40 26V12L24 4Z" fill="#152bf9" fill-opacity=".88"/>
+      <path d="M14 28C14 28 17 34 24 35C31 34 34 28 34 28" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      <circle cx="24" cy="22" r="3.5" fill="white"/>
+      <path d="M18 18L24 13L30 18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    </svg>
+    <span class="n-word">Brivent</span>
+  </a>
+  <ul class="n-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">What We Do</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#contact" class="n-cta">Get in Touch</a></li>
+  </ul>
+  <button class="ham" id="ham" onclick="toggleMob()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hi">
+    <div class="badge"><span class="bdot"></span>Building the Future of Ambition</div>
+    <h1>The <span class="acc">Ecosystem</span><br>Behind Your<br><span class="red">Next</span> Big Idea.</h1>
+    <p class="hero-sub">Brivent is a parent company building products, platforms, and early-stage ventures — giving structure to ambition and bridging the gap between potential and execution.</p>
+    <div class="ha">
+      <a href="#products" class="bp">Explore Our Work <i class="fa-solid fa-arrow-right fa-sm"></i></a>
+      <a href="#about" class="bg">Learn About Us <i class="fa-solid fa-chevron-right fa-xs"></i></a>
+    </div>
+    <div class="hstats">
+      <div class="stat"><div class="stn">3<span>+</span></div><div class="stl">Active Products</div></div>
+      <div class="stat"><div class="stn" style="color:var(--flamingo)">∞</div><div class="stl">Ideas We Support</div></div>
+      <div class="stat"><div class="stn">1<span>.</span></div><div class="stl">Clear Mission</div></div>
+    </div>
+  </div>
+  <div class="hbg">
+    <svg viewBox="0 0 200 200" fill="none"><path d="M100 10L20 50V110C20 150 55 185 100 196C145 185 180 150 180 110V50L100 10Z" fill="#152bf9"/><path d="M50 115C50 115 65 145 100 148C135 145 150 115 150 115" stroke="white" stroke-width="8" stroke-linecap="round" fill="none"/><circle cx="100" cy="95" r="14" fill="white"/><path d="M74 78L100 56L126 78" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+  </div>
+  <div class="sh"><div class="sl"></div>Scroll to explore</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section class="ab-sec" id="about">
+  <div class="container">
+    <div class="stag reveal">About Brivent</div>
+    <div class="ab-grid">
+      <div class="ab-body reveal">
+        <h2 class="sec-h" style="margin-bottom:26px">Structure for<br><span class="acc">Ambition.</span></h2>
+        <p>Brivent was created from observing <strong>talented people, communities, and ideas</strong> struggle — not because they lacked ability, but because they lacked direction and support.</p>
+        <p>We are a parent company that <strong>builds products, nurtures platforms,</strong> and supports early-stage ventures — the scaffolding that holds big ideas upright while they grow.</p>
+        <p>From SaaS tools to community platforms and tech ecosystems, Brivent operates at the intersection of vision and execution.</p>
+        <a href="#contact" class="bp" style="margin-top:26px">Work With Us <i class="fa-solid fa-arrow-right fa-sm"></i></a>
+      </div>
+      <div class="vals">
+        <div class="val reveal d1"><div class="v-ico"><i class="fa-solid fa-bullseye"></i></div><h4>Clarity</h4><p>Every idea and builder we work with gets the clear direction they need to move forward with certainty.</p></div>
+        <div class="val reveal d2"><div class="v-ico"><i class="fa-solid fa-bolt"></i></div><h4>Integrity</h4><p>We work on every idea with intentionality, holding our standards high throughout every collaboration.</p></div>
+        <div class="val reveal d3"><div class="v-ico"><i class="fa-solid fa-shield-halved"></i></div><h4>Trust</h4><p>Trust is essential to build and execute every idea. We protect and champion what we commit to.</p></div>
+        <div class="val reveal d4"><div class="v-ico"><i class="fa-solid fa-arrow-trend-up"></i></div><h4>Growth</h4><p>Forward momentum is embedded into every product and partnership we forge — always moving up.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section class="sv-sec" id="services">
+  <div class="container">
+    <div class="sv-head">
+      <div class="stag reveal">What We Do</div>
+      <h2 class="sec-h reveal">Building <span class="acc">Systems</span><br>That Scale.</h2>
+    </div>
+    <div class="sv-grid reveal">
+      <div class="sv-item"><div class="sv-n">01</div><div class="sv-ico"><i class="fa-solid fa-layer-group"></i></div><h3>Product Development</h3><p>We conceive, design, and build digital products from the ground up — with a relentless focus on usability, performance, and real market fit.</p><span class="sv-more">Explore <i class="fa-solid fa-arrow-right fa-xs"></i></span></div>
+      <div class="sv-item"><div class="sv-n">02</div><div class="sv-ico"><i class="fa-solid fa-people-group"></i></div><h3>Community Building</h3><p>Great products need great communities. We build ecosystems where builders, founders, and students connect, collaborate, and compound their growth.</p><span class="sv-more">Explore <i class="fa-solid fa-arrow-right fa-xs"></i></span></div>
+      <div class="sv-item"><div class="sv-n">03</div><div class="sv-ico"><i class="fa-solid fa-lightbulb"></i></div><h3>Startup Support</h3><p>We serve as a parenting ecosystem for early-stage ideas — providing clarity, direction, mentorship, and the infrastructure to turn vision into traction.</p><span class="sv-more">Explore <i class="fa-solid fa-arrow-right fa-xs"></i></span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRODUCTS -->
+<section class="pr-sec" id="products">
+  <div class="container">
+    <div class="pr-head">
+      <div>
+        <div class="stag reveal">Our Portfolio</div>
+        <h2 class="sec-h reveal">Products &amp;<br><span class="acc">Ventures.</span></h2>
+      </div>
+      <p class="pr-sub reveal">Each product in the Brivent ecosystem is built with intention — solving real problems for real builders.</p>
+    </div>
+    <div class="pr-grid">
+
+      <!-- WhatsApp Automation -->
+      <div class="pc feat reveal d1">
+        <div class="pt">
+          <img class="pli" src="wa-logo.png" alt="WA Automation"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="pif ib" style="display:none"><i class="fa-brands fa-whatsapp"></i></div>
+          <span class="pb2 live">Live</span>
+        </div>
+        <div class="pb">
+          <h3>WhatsApp Automation</h3>
+          <p>A SaaS platform that helps businesses automate their WhatsApp workflows — from customer support to lead nurturing and transactional messaging at scale.</p>
+          <div class="ptgs"><span class="ptg">SaaS</span><span class="ptg">Automation</span><span class="ptg">Business Tools</span></div>
+          <a href="#contact" class="plk">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></a>
+        </div>
+      </div>
+
+      <!-- Kinnoc -->
+      <div class="pc reveal d2">
+        <div class="pt">
+          <img class="pli" src="kinnoc.png" alt="Kinnoc"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="pif iv" style="display:none"><i class="fa-solid fa-link"></i></div>
+          <span class="pb2 build">Building</span>
+        </div>
+        <div class="pb">
+          <h3>Kinnoc</h3>
+          <p>A community and connection platform designed to bridge people, ideas, and opportunities — where meaningful networks are built and sustained over time.</p>
+          <div class="ptgs"><span class="ptg">Platform</span><span class="ptg">Community</span><span class="ptg">Networking</span></div>
+          <a href="#contact" class="plk">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></a>
+        </div>
+      </div>
+
+      <!-- BIIT -->
+      <div class="pc reveal d3">
+        <div class="pt">
+          <img class="pli" src="biit.png" alt="BIIT"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="pif ir" style="display:none"><i class="fa-solid fa-microchip"></i></div>
+          <span class="pb2 beta">Beta</span>
+        </div>
+        <div class="pb">
+          <h3>BIIT</h3>
+          <p>Brivent's tech community for builders, developers, and innovators. A space where technical talent converges to collaborate, learn, and build the future together.</p>
+          <div class="ptgs"><span class="ptg">Tech Community</span><span class="ptg">Builders</span><span class="ptg">Education</span></div>
+          <a href="#contact" class="plk">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- VISION -->
+<section class="vi-sec">
+  <div class="container">
+    <div class="vi-grid">
+      <div class="vi-l reveal">
+        <div class="stag">Our Direction</div>
+        <h2>Vision &amp;<br><span style="color:var(--persian)">Mission.</span></h2>
+        <p style="margin-top:18px">We are building towards a world where ambition is never left unsupported — where every talented founder, student, and builder has the structure, tools, and community they need to succeed.</p>
+      </div>
+      <div class="mis reveal d2">
+        <div class="mi"><div class="mi-ico"><i class="fa-solid fa-earth-africa"></i></div><div class="mi-b"><h4>Our Vision</h4><p>To become the foundational infrastructure layer powering the next generation of scalable systems and companies across Africa and beyond.</p></div></div>
+        <div class="mi"><div class="mi-ico"><i class="fa-solid fa-crosshairs"></i></div><div class="mi-b"><h4>Our Mission</h4><p>To give structure to ambition by building products, supporting ideas, and creating ecosystems that bridge the gap between potential and execution.</p></div></div>
+        <div class="mi"><div class="mi-ico"><i class="fa-solid fa-gem"></i></div><div class="mi-b"><h4>Our Promise</h4><p>Every idea that enters the Brivent ecosystem is worked on with intentionality, clarity, and an unwavering commitment to forward growth.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section class="ct-sec" id="contact">
+  <div class="container">
+    <div class="stag reveal">Get In Touch</div>
+    <h2 class="sec-h reveal">Let's Build<br><span class="acc">Together.</span></h2>
+    <div class="ct-grid">
+      <div class="ct-l reveal">
+        <h3>Have an idea worth building?</h3>
+        <p>Whether you're a founder looking for a strategic partner, a builder searching for an ecosystem, or a brand that needs direction — Brivent is ready to listen and act.</p>
+        <div class="ci"><div class="ci-i"><i class="fa-solid fa-envelope"></i></div><div class="ci-t"><span>Email</span><a href="mailto:admin@brivent.co">admin@brivent.co</a></div></div>
+        <div class="ci"><div class="ci-i"><i class="fa-solid fa-globe"></i></div><div class="ci-t"><span>Website</span><p>brivent.com.ng</p></div></div>
+        <div class="ci"><div class="ci-i"><i class="fa-solid fa-location-dot"></i></div><div class="ci-t"><span>Location</span><p>Nigeria · Remote Worldwide</p></div></div>
+        <div class="rb"><p><strong>Response time</strong>We typically respond within 24–48 hours. For urgent matters, reach out via email directly.</p></div>
+      </div>
+      <div class="cf reveal d2">
+        <h4>Send a Message</h4>
+        <div class="frow">
+          <div class="fg"><label>First Name</label><input type="text" placeholder="Caleb"></div>
+          <div class="fg"><label>Last Name</label><input type="text" placeholder="Okafor"></div>
+        </div>
+        <div class="fg"><label>Email Address</label><input type="email" placeholder="you@example.com"></div>
+        <div class="fg"><label>Topic</label>
+          <select>
+            <option>Select a topic</option>
+            <option>Product Inquiry</option>
+            <option>Partnership / Collaboration</option>
+            <option>Startup Support</option>
+            <option>Community (BIIT / Kinnoc)</option>
+            <option>General Question</option>
+          </select>
+        </div>
+        <div class="fg"><label>Message</label><textarea placeholder="Tell us about your idea, project, or question..."></textarea></div>
+        <button class="sb" onclick="submitForm(this)">Send Message <i class="fa-solid fa-paper-plane fa-sm"></i></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="ft">
+      <div class="fb">
+        <a href="#home" class="n-logo">
+          <img src="logo.png" alt="Brivent"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <svg class="n-logo-svg" style="display:none" viewBox="0 0 48 48" fill="none">
+            <path d="M24 4L8 12V26C8 34.8 15.2 43 24 46C32.8 43 40 34.8 40 26V12L24 4Z" fill="#152bf9" fill-opacity=".88"/>
+            <path d="M14 28C14 28 17 34 24 35C31 34 34 28 34 28" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <circle cx="24" cy="22" r="3.5" fill="white"/>
+            <path d="M18 18L24 13L30 18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+          <span class="n-word">Brivent</span>
+        </a>
+        <p>Giving structure to ambition — building products, supporting ideas, and bridging potential with execution.</p>
+      </div>
+      <div class="fc"><h5>Company</h5><ul><li><a href="#home">Home</a></li><li><a href="#about">About Us</a></li><li><a href="#services">What We Do</a></li><li><a href="#contact">Contact</a></li></ul></div>
+      <div class="fc"><h5>Products</h5><ul><li><a href="#products">WA Automation</a></li><li><a href="#products">Kinnoc</a></li><li><a href="#products">BIIT</a></li></ul></div>
+      <div class="fc"><h5>Connect</h5><ul><li><a href="mailto:admin@brivent.co">admin@brivent.co</a></li><li><a href="#">brivent.com.ng</a></li><li><a href="#">Twitter / X</a></li><li><a href="#">LinkedIn</a></li></ul></div>
+    </div>
+    <div class="ftb">
+      <p>© 2025 Brivent. Built with <span>♥</span> for ambitious builders.</p>
+      <div class="soc">
+        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* CURSOR */
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button,.pc,.val,.sv-item,.mi').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';cur.style.background='#ff110b';curR.style.width='48px';curR.style.height='48px';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';cur.style.background='#152bf9';curR.style.width='36px';curR.style.height='36px';});
+});
+
+/* PARTICLES */
+const cv=document.getElementById('pc'),cx=cv.getContext('2d');
+let W,H,pts=[];
+function rsz(){W=cv.width=innerWidth;H=cv.height=innerHeight;}
+rsz();addEventListener('resize',rsz);
+class P{constructor(){this.r();}r(){this.x=Math.random()*W;this.y=Math.random()*H;this.s=Math.random()*1.3+.3;this.vx=(Math.random()-.5)*.36;this.vy=(Math.random()-.5)*.36;this.a=Math.random()*.42+.08;this.c=Math.random()>.72?'#ff110b':'#152bf9';this.ph=Math.random()*Math.PI*2;this.ps=Math.random()*.017+.004;}u(){this.x+=this.vx;this.y+=this.vy;this.ph+=this.ps;this.ca=this.a*(0.55+0.45*Math.sin(this.ph));if(this.x<0||this.x>W||this.y<0||this.y>H)this.r();}d(){cx.globalAlpha=this.ca;cx.fillStyle=this.c;cx.beginPath();cx.arc(this.x,this.y,this.s,0,Math.PI*2);cx.fill();}}
+for(let i=0;i<110;i++)pts.push(new P());
+function lines(){for(let i=0;i<pts.length;i++){for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<90){cx.globalAlpha=(1-d/90)*.065;cx.strokeStyle='#152bf9';cx.lineWidth=.4;cx.beginPath();cx.moveTo(pts[i].x,pts[i].y);cx.lineTo(pts[j].x,pts[j].y);cx.stroke();}}}}
+(function loop(){cx.clearRect(0,0,W,H);lines();pts.forEach(p=>{p.u();p.d();});cx.globalAlpha=1;requestAnimationFrame(loop);})();
+
+/* NAV SCROLL */
+const navEl=document.getElementById('nav');
+addEventListener('scroll',()=>navEl.classList.toggle('scrolled',scrollY>60));
+
+/* REVEAL */
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+/* MOBILE NAV */
+const mob=document.getElementById('mob'),ham=document.getElementById('ham');
+function toggleMob(){const o=mob.classList.toggle('open');ham.classList.toggle('open',o);document.body.style.overflow=o?'hidden':'';}
+function closeMob(){mob.classList.remove('open');ham.classList.remove('open');document.body.style.overflow='';}
+mob.addEventListener('click',e=>{if(e.target===mob)closeMob();});
+
+/* FORM */
+function submitForm(btn){btn.innerHTML='<i class="fa-solid fa-circle-check"></i> Sent! We\'ll be in touch.';btn.style.background='#166534';btn.disabled=true;setTimeout(()=>{btn.innerHTML='Send Message <i class="fa-solid fa-paper-plane fa-sm"></i>';btn.style.background='';btn.disabled=false;},4000);}
+
+/* TOUCH */
+if('ontouchstart' in window){cur.style.display='none';curR.style.display='none';document.body.style.cursor='auto';}
+</script>
+</body>
+</html>
