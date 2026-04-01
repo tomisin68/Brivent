@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Brivent — The Infrastructure of Ambition</title>
+<!-- Favicon for browser tab and Google search results -->
+<link rel="icon" type="image/png" href="favicon.jpg">
+<link rel="apple-touch-icon" href="favicon.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet">
@@ -30,9 +33,8 @@ body{font-family:var(--fb);background:var(--deep);color:var(--white-c);overflow-
 nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:26px 72px;display:flex;align-items:center;justify-content:space-between;transition:all .35s;}
 nav.scrolled{background:rgba(3,3,45,.94);backdrop-filter:blur(22px);padding:16px 72px;border-bottom:1px solid rgba(215,215,255,.08);}
 .n-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
-.n-logo img{width:36px;height:36px;object-fit:contain;}
-.n-logo-svg{width:36px;height:36px;flex-shrink:0;}
-.n-word{font-family:var(--fd);font-weight:700;font-size:1.28rem;color:var(--white-c);letter-spacing:-.02em;}
+.n-logo img{height:52px; width:auto; max-width:180px; object-fit:contain; display:block; transition:all .2s;}
+.n-logo:hover img{filter:brightness(1.05);}
 .n-links{display:flex;align-items:center;gap:38px;list-style:none;}
 .n-links a{text-decoration:none;color:rgba(239,238,255,.6);font-size:.88rem;transition:color .2s;cursor:none;}
 .n-links a:hover{color:var(--white-c);}
@@ -59,7 +61,7 @@ nav.scrolled{background:rgba(3,3,45,.94);backdrop-filter:blur(22px);padding:16px
 .mob a:hover{color:var(--persian);}
 .mob-soc{display:flex;gap:14px;margin-top:10px;opacity:0;transform:translateY(10px);}
 .mob.open .mob-soc{animation:mfade .35s .3s ease forwards;}
-.mob-soc a{width:42px;height:42px;border:1px solid rgba(215,215,255,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;color:rgba(215,215,255,.6);font-size:.88rem;text-decoration:none;transition:all .2s;opacity:1!important;transform:none!important;animation:none!important;}
+.mob-soc a{width:42px;height:42px;border:1px solid rgba(215,215,255,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;color:rgba(215,215,255,.6);font-size:.88rem;text-decoration:none;transition:all .2s;}
 .mob-soc a:hover{border-color:rgba(21,43,249,.45);color:white;}
 @keyframes mfade{to{opacity:1;transform:none}}
 
@@ -80,44 +82,45 @@ nav.scrolled{background:rgba(3,3,45,.94);backdrop-filter:blur(22px);padding:16px
 .bg{padding:13px 28px;background:transparent;color:var(--white-c);text-decoration:none;border-radius:8px;font-weight:400;font-size:.9rem;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--gb);transition:all .25s;cursor:none;}
 .bg:hover{border-color:rgba(215,215,255,.3);background:rgba(215,215,255,.05);transform:translateY(-2px);}
 
-/* HERO */
+/* HERO with stock image */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:120px 72px 0;z-index:1;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600&q=80') center/cover no-repeat;opacity:.12;z-index:0;pointer-events:none;}
 .hi{max-width:660px;position:relative;z-index:2;}
 .badge{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border:1px solid rgba(215,215,255,.12);border-radius:100px;font-size:.7rem;color:var(--chalk);letter-spacing:.08em;text-transform:uppercase;margin-bottom:26px;background:rgba(21,43,249,.1);animation:fsup .7s ease forwards;opacity:0;}
 .bdot{width:6px;height:6px;background:var(--flamingo);border-radius:50%;animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
 .hero h1{font-family:var(--fd);font-size:clamp(2.5rem,4.5vw,4.2rem);font-weight:700;line-height:1.06;letter-spacing:-.025em;color:var(--white-c);animation:fsup .7s .12s ease forwards;opacity:0;}
-.hero h1 .acc{color:var(--persian);} .hero h1 .red{color:var(--flamingo);}
 .hero-sub{margin-top:22px;font-size:.97rem;line-height:1.76;color:rgba(215,215,255,.63);max-width:490px;animation:fsup .7s .24s ease forwards;opacity:0;}
 .ha{margin-top:38px;display:flex;gap:13px;flex-wrap:wrap;animation:fsup .7s .36s ease forwards;opacity:0;}
 .hstats{margin-top:62px;display:flex;gap:42px;flex-wrap:wrap;animation:fsup .7s .5s ease forwards;opacity:0;}
 .stat{border-left:2px solid var(--persian);padding-left:15px;}
 .stn{font-family:var(--fd);font-size:1.65rem;font-weight:700;line-height:1;}
 .stn span{color:var(--persian);}
-.stl{font-size:.74rem;color:rgba(215,215,255,.48);margin-top:4px;letter-spacing:.04em;}
-.hbg{position:absolute;right:-50px;top:50%;transform:translateY(-50%);width:500px;height:500px;opacity:.08;pointer-events:none;animation:flt 9s ease-in-out infinite;}
-@keyframes flt{0%,100%{transform:translateY(-50%)}50%{transform:translateY(-52%)}}
+.stl{font-size:.74rem;color:rgba(215,215,255,.48);margin-top:4px;}
 .sh{position:absolute;bottom:34px;left:72px;display:flex;align-items:center;gap:12px;font-size:.7rem;color:rgba(215,215,255,.33);letter-spacing:.1em;text-transform:uppercase;animation:fsup .7s .65s ease forwards;opacity:0;z-index:2;}
 .sl{width:44px;height:1px;background:linear-gradient(to right,var(--persian),transparent);overflow:hidden;position:relative;}
 .sl::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:white;animation:ss 2s ease-in-out infinite;}
 @keyframes ss{0%{left:-100%}100%{left:100%}}
 @keyframes fsup{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
 
-/* ABOUT */
-.ab-sec{padding:120px 0;}
+/* ABOUT with visual imagery */
+.ab-sec{padding:120px 0;position:relative;}
 .ab-grid{display:grid;grid-template-columns:1fr 1fr;gap:76px;align-items:center;margin-top:52px;}
 .ab-body p{font-size:.95rem;line-height:1.82;color:rgba(215,215,255,.63);margin-bottom:16px;}
 .ab-body p strong{color:var(--white-c);font-weight:500;}
-.vals{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.vals{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:48px;}
 .val{padding:24px 20px;border:1px solid var(--gb);border-radius:13px;background:var(--glass);backdrop-filter:blur(10px);transition:all .3s;cursor:none;}
 .val:hover{border-color:rgba(21,43,249,.4);background:rgba(21,43,249,.12);transform:translateY(-4px);}
 .val:nth-child(2),.val:nth-child(4){margin-top:18px;}
 .v-ico{width:36px;height:36px;background:rgba(21,43,249,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:.88rem;color:var(--chalk);}
 .val h4{font-family:var(--fd);font-size:.9rem;font-weight:600;color:var(--white-c);margin-bottom:5px;}
 .val p{font-size:.78rem;line-height:1.6;color:rgba(215,215,255,.48);}
+.ab-visual{position:relative;border-radius:24px;overflow:hidden;box-shadow:0 20px 35px -12px rgba(0,0,0,.4);}
+.ab-visual img{width:100%;height:auto;display:block;transition:transform .5s ease;}
+.ab-visual:hover img{transform:scale(1.02);}
 
 /* SERVICES */
-.sv-sec{padding:120px 0;background:linear-gradient(180deg,transparent 0%,rgba(21,43,249,.04) 50%,transparent 100%);}
+.sv-sec{padding:120px 0;background:linear-gradient(180deg,transparent 0%,rgba(21,43,249,.04) 50%,transparent 100%);position:relative;}
 .sv-head{max-width:540px;margin-bottom:60px;}
 .sv-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--gb);border-radius:16px;overflow:hidden;}
 .sv-item{padding:42px 30px;background:rgba(6,6,31,.65);border-right:1px solid var(--gb);transition:background .3s;cursor:none;}
@@ -125,11 +128,12 @@ nav.scrolled{background:rgba(3,3,45,.94);backdrop-filter:blur(22px);padding:16px
 .sv-item:hover{background:rgba(21,43,249,.09);}
 .sv-n{font-size:.67rem;font-weight:600;letter-spacing:.15em;color:rgba(21,43,249,.55);margin-bottom:20px;}
 .sv-ico{width:48px;height:48px;border:1px solid rgba(21,43,249,.28);border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:1.05rem;color:var(--chalk);background:rgba(21,43,249,.08);transition:all .3s;}
-.sv-item:hover .sv-ico{background:rgba(21,43,249,.2);border-color:rgba(21,43,249,.55);box-shadow:0 0 16px rgba(21,43,249,.25);}
+.sv-item:hover .sv-ico{background:rgba(21,43,249,.2);border-color:rgba(21,43,249,.55);}
 .sv-item h3{font-family:var(--fd);font-size:1rem;font-weight:600;color:var(--white-c);margin-bottom:9px;}
 .sv-item p{font-size:.83rem;line-height:1.72;color:rgba(215,215,255,.5);}
 .sv-more{margin-top:22px;display:inline-flex;align-items:center;gap:6px;font-size:.77rem;color:var(--persian);opacity:0;transform:translateX(-5px);transition:all .3s;}
 .sv-item:hover .sv-more{opacity:1;transform:none;}
+.sv-bg-deco{position:absolute;bottom:0;right:0;width:400px;opacity:.05;pointer-events:none;}
 
 /* PRODUCTS */
 .pr-sec{padding:120px 0;}
@@ -142,19 +146,13 @@ nav.scrolled{background:rgba(3,3,45,.94);backdrop-filter:blur(22px);padding:16px
 .pc:hover::before{opacity:1;}
 .pc.feat{border-color:rgba(21,43,249,.24);background:linear-gradient(135deg,rgba(21,43,249,.1) 0%,rgba(6,6,31,.95) 60%);}
 .pt{padding:30px 30px 0;display:flex;align-items:flex-start;justify-content:space-between;}
-/* product image logo */
-.pli{width:50px;height:50px;border-radius:13px;object-fit:contain;background:rgba(21,43,249,.15);border:1px solid rgba(21,43,249,.25);padding:6px;}
-/* icon fallback */
-.pif{width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
-.ib{background:rgba(21,43,249,.18);border:1px solid rgba(21,43,249,.3);color:#7b93ff;}
-.ir{background:rgba(255,17,11,.13);border:1px solid rgba(255,17,11,.28);color:#ff7a75;}
-.iv{background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.3);color:#c4b5fd;}
-.pb2{padding:4px 11px;border-radius:100px;font-size:.68rem;font-weight:500;letter-spacing:.04em;}
+.pli{width:50px;height:50px;border-radius:13px;object-fit:cover;background:rgba(21,43,249,.15);border:1px solid rgba(21,43,249,.25);}
+.pb2{padding:4px 11px;border-radius:100px;font-size:.68rem;font-weight:500;}
 .live{background:rgba(21,43,249,.14);color:var(--chalk);border:1px solid rgba(21,43,249,.28);}
 .build{background:rgba(255,17,11,.09);color:#ff8b87;border:1px solid rgba(255,17,11,.22);}
 .beta{background:rgba(139,92,246,.13);color:#c4b5fd;border:1px solid rgba(139,92,246,.28);}
 .pb{padding:20px 30px 30px;}
-.pb h3{font-family:var(--fd);font-size:1.15rem;font-weight:600;color:var(--white-c);margin-bottom:9px;letter-spacing:-.01em;}
+.pb h3{font-family:var(--fd);font-size:1.15rem;font-weight:600;color:var(--white-c);margin-bottom:9px;}
 .pb p{font-size:.85rem;line-height:1.72;color:rgba(215,215,255,.55);margin-bottom:22px;}
 .ptgs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:22px;}
 .ptg{padding:3px 10px;background:rgba(215,215,255,.05);border:1px solid rgba(215,215,255,.09);border-radius:100px;font-size:.7rem;color:rgba(215,215,255,.48);}
@@ -162,7 +160,7 @@ nav.scrolled{background:rgba(3,3,45,.94);backdrop-filter:blur(22px);padding:16px
 .plk:hover{gap:10px;}
 
 /* VISION */
-.vi-sec{padding:110px 0;background:linear-gradient(135deg,rgba(21,43,249,.09) 0%,transparent 60%);border-top:1px solid var(--gb);border-bottom:1px solid var(--gb);}
+.vi-sec{padding:110px 0;background:linear-gradient(135deg,rgba(21,43,249,.09) 0%,transparent 60%);border-top:1px solid var(--gb);border-bottom:1px solid var(--gb);position:relative;}
 .vi-grid{display:grid;grid-template-columns:1fr 1fr;gap:76px;align-items:center;}
 .vi-l h2{font-family:var(--fd);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:700;line-height:1.15;letter-spacing:-.02em;color:var(--white-c);margin-bottom:20px;}
 .vi-l p{font-size:.95rem;line-height:1.78;color:rgba(215,215,255,.6);}
@@ -172,8 +170,9 @@ nav.scrolled{background:rgba(3,3,45,.94);backdrop-filter:blur(22px);padding:16px
 .mi-ico{width:40px;height:40px;min-width:40px;background:rgba(21,43,249,.15);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:.95rem;color:var(--chalk);}
 .mi-b h4{font-family:var(--fd);font-size:.9rem;font-weight:600;color:var(--white-c);margin-bottom:4px;}
 .mi-b p{font-size:.8rem;line-height:1.6;color:rgba(215,215,255,.48);}
+.vi-bg-img{position:absolute;right:0;bottom:0;width:45%;opacity:.07;pointer-events:none;border-radius:30px;}
 
-/* CONTACT */
+/* CONTACT - Formspree integration */
 .ct-sec{padding:120px 0;}
 .ct-grid{display:grid;grid-template-columns:1fr 1fr;gap:76px;align-items:start;margin-top:52px;}
 .ct-l h3{font-family:var(--fd);font-size:1.4rem;font-weight:600;color:var(--white-c);margin-bottom:13px;}
@@ -190,13 +189,14 @@ nav.scrolled{background:rgba(3,3,45,.94);backdrop-filter:blur(22px);padding:16px
 .cf h4{font-family:var(--fd);font-weight:600;font-size:1rem;color:var(--white-c);margin-bottom:24px;}
 .fg{margin-bottom:16px;}
 .fg label{display:block;font-size:.74rem;font-weight:500;color:rgba(215,215,255,.52);margin-bottom:6px;letter-spacing:.04em;}
-.fg input,.fg textarea,.fg select{width:100%;padding:12px 15px;background:rgba(215,215,255,.04);border:1px solid rgba(215,215,255,.1);border-radius:8px;color:var(--white-c);font-family:var(--fb);font-size:.88rem;outline:none;transition:all .2s;-webkit-appearance:none;}
+.fg input,.fg textarea,.fg select{width:100%;padding:12px 15px;background:rgba(215,215,255,.04);border:1px solid rgba(215,215,255,.1);border-radius:8px;color:var(--white-c);font-family:var(--fb);font-size:.88rem;outline:none;transition:all .2s;}
 .fg select option{background:var(--deep);}
 .fg input:focus,.fg textarea:focus,.fg select:focus{border-color:rgba(21,43,249,.5);background:rgba(21,43,249,.06);box-shadow:0 0 0 3px rgba(21,43,249,.1);}
 .fg textarea{resize:vertical;min-height:108px;}
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
 .sb{width:100%;padding:14px;background:var(--persian);color:white;border:none;border-radius:8px;font-family:var(--fd);font-size:.9rem;font-weight:600;cursor:none;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;}
 .sb:hover{background:#2a3fff;transform:translateY(-2px);box-shadow:0 12px 28px rgba(21,43,249,.38);}
+.sb:disabled{opacity:.7;cursor:not-allowed;transform:none;}
 
 /* FOOTER */
 footer{padding:56px 0 34px;border-top:1px solid var(--gb);position:relative;z-index:1;}
@@ -220,9 +220,9 @@ footer{padding:56px 0 34px;border-top:1px solid var(--gb);position:relative;z-in
   .hero{padding:120px 36px 0;}
   .container{padding:0 36px;}
   .divider{margin:0 36px;}
-  .hbg{width:360px;height:360px;right:-40px;}
   .ab-grid,.vi-grid{grid-template-columns:1fr;gap:44px;}
   .ft{grid-template-columns:1fr 1fr;gap:32px;}
+  .n-logo img{height:44px;}
 }
 @media(max-width:768px){
   nav{padding:18px 22px;}
@@ -232,28 +232,20 @@ footer{padding:56px 0 34px;border-top:1px solid var(--gb);position:relative;z-in
   .hero{padding:96px 22px 0;}
   .container{padding:0 22px;}
   .divider{margin:0 22px;}
-  .hbg{display:none;}
-  .hstats{gap:22px;}
-  .sh{left:22px;}
   .ab-sec,.sv-sec,.pr-sec,.ct-sec{padding:76px 0;}
   .vals{grid-template-columns:1fr 1fr;}
   .val:nth-child(2),.val:nth-child(4){margin-top:0;}
   .sv-grid{grid-template-columns:1fr;}
-  .sv-item{border-right:none;border-bottom:1px solid var(--gb);}
-  .sv-item:last-child{border-bottom:none;}
   .pr-grid{grid-template-columns:1fr;}
-  .pr-head{flex-direction:column;align-items:flex-start;}
   .ct-grid{grid-template-columns:1fr;gap:44px;}
-  .frow{grid-template-columns:1fr;}
   .ft{grid-template-columns:1fr;gap:26px;}
-  .vi-sec{padding:70px 0;}
+  .n-logo img{height:40px;}
 }
 @media(max-width:480px){
   .hero h1{font-size:2.15rem;}
   .vals{grid-template-columns:1fr;}
-  .val:nth-child(2),.val:nth-child(4){margin-top:0;}
   .stn{font-size:1.4rem;}
-  .bp,.bg{padding:11px 20px;font-size:.86rem;}
+  .n-logo img{height:36px;}
   .cf{padding:24px 18px;}
 }
 </style>
@@ -266,265 +258,77 @@ footer{padding:56px 0 34px;border-top:1px solid var(--gb);position:relative;z-in
 
 <!-- MOBILE NAV -->
 <div class="mob" id="mob">
-  <a href="#home"     onclick="closeMob()">Home</a>
-  <a href="#about"    onclick="closeMob()">About</a>
+  <a href="#home" onclick="closeMob()">Home</a>
+  <a href="#about" onclick="closeMob()">About</a>
   <a href="#services" onclick="closeMob()">What We Do</a>
   <a href="#products" onclick="closeMob()">Products</a>
-  <a href="#contact"  onclick="closeMob()">Contact</a>
-  <div class="mob-soc">
-    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-    <a href="#"><i class="fa-brands fa-instagram"></i></a>
-  </div>
+  <a href="#contact" onclick="closeMob()">Contact</a>
+  <div class="mob-soc"><a href="#"><i class="fa-brands fa-x-twitter"></i></a><a href="#"><i class="fa-brands fa-linkedin-in"></i></a><a href="#"><i class="fa-brands fa-instagram"></i></a></div>
 </div>
 
-<!-- NAV -->
+<!-- NAV: BOLD LOGO -->
 <nav id="nav">
   <a href="#home" class="n-logo">
-    <!-- Replace logo.png with your actual path -->
-    <img src="logo.png" alt="Brivent" id="navLogoImg"
-         onerror="this.style.display='none';document.getElementById('navLogoSvg').style.display='block'">
-    <svg id="navLogoSvg" class="n-logo-svg" style="display:none" viewBox="0 0 48 48" fill="none">
-      <path d="M24 4L8 12V26C8 34.8 15.2 43 24 46C32.8 43 40 34.8 40 26V12L24 4Z" fill="#152bf9" fill-opacity=".88"/>
-      <path d="M14 28C14 28 17 34 24 35C31 34 34 28 34 28" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-      <circle cx="24" cy="22" r="3.5" fill="white"/>
-      <path d="M18 18L24 13L30 18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    </svg>
-    <span class="n-word">Brivent</span>
+    <img src="brivent.png" alt="Brivent" style="height:52px; width:auto; max-width:200px;">
   </a>
   <ul class="n-links">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">What We Do</a></li>
-    <li><a href="#products">Products</a></li>
-    <li><a href="#contact" class="n-cta">Get in Touch</a></li>
+    <li><a href="#home">Home</a></li><li><a href="#about">About</a></li><li><a href="#services">What We Do</a></li><li><a href="#products">Products</a></li><li><a href="#contact" class="n-cta">Get in Touch</a></li>
   </ul>
-  <button class="ham" id="ham" onclick="toggleMob()" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="ham" id="ham" onclick="toggleMob()"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- HERO -->
-<section class="hero" id="home">
-  <div class="hi">
-    <div class="badge"><span class="bdot"></span>Building the Future of Ambition</div>
-    <h1>The <span class="acc">Ecosystem</span><br>Behind Your<br><span class="red">Next</span> Big Idea.</h1>
-    <p class="hero-sub">Brivent is a parent company building products, platforms, and early-stage ventures — giving structure to ambition and bridging the gap between potential and execution.</p>
-    <div class="ha">
-      <a href="#products" class="bp">Explore Our Work <i class="fa-solid fa-arrow-right fa-sm"></i></a>
-      <a href="#about" class="bg">Learn About Us <i class="fa-solid fa-chevron-right fa-xs"></i></a>
-    </div>
-    <div class="hstats">
-      <div class="stat"><div class="stn">3<span>+</span></div><div class="stl">Active Products</div></div>
-      <div class="stat"><div class="stn" style="color:var(--flamingo)">∞</div><div class="stl">Ideas We Support</div></div>
-      <div class="stat"><div class="stn">1<span>.</span></div><div class="stl">Clear Mission</div></div>
-    </div>
-  </div>
-  <div class="hbg">
-    <svg viewBox="0 0 200 200" fill="none"><path d="M100 10L20 50V110C20 150 55 185 100 196C145 185 180 150 180 110V50L100 10Z" fill="#152bf9"/><path d="M50 115C50 115 65 145 100 148C135 145 150 115 150 115" stroke="white" stroke-width="8" stroke-linecap="round" fill="none"/><circle cx="100" cy="95" r="14" fill="white"/><path d="M74 78L100 56L126 78" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-  </div>
-  <div class="sh"><div class="sl"></div>Scroll to explore</div>
-</section>
-
+<section class="hero" id="home"><div class="hi"><div class="badge"><span class="bdot"></span>Building the Future of Ambition</div><h1>The <span class="acc">Ecosystem</span><br>Behind Your<br><span class="red">Next</span> Big Idea.</h1><p class="hero-sub">Brivent is a parent company building products, platforms, and early-stage ventures — giving structure to ambition and bridging the gap between potential and execution.</p><div class="ha"><a href="#products" class="bp">Explore Our Work <i class="fa-solid fa-arrow-right fa-sm"></i></a><a href="#about" class="bg">Learn About Us <i class="fa-solid fa-chevron-right fa-xs"></i></a></div><div class="hstats"><div class="stat"><div class="stn">3<span>+</span></div><div class="stl">Active Products</div></div><div class="stat"><div class="stn" style="color:var(--flamingo)">∞</div><div class="stl">Ideas We Support</div></div><div class="stat"><div class="stn">1<span>.</span></div><div class="stl">Clear Mission</div></div></div></div><div class="sh"><div class="sl"></div>Scroll to explore</div></section>
 <div class="divider"></div>
 
-<!-- ABOUT -->
-<section class="ab-sec" id="about">
-  <div class="container">
-    <div class="stag reveal">About Brivent</div>
-    <div class="ab-grid">
-      <div class="ab-body reveal">
-        <h2 class="sec-h" style="margin-bottom:26px">Structure for<br><span class="acc">Ambition.</span></h2>
-        <p>Brivent was created from observing <strong>talented people, communities, and ideas</strong> struggle — not because they lacked ability, but because they lacked direction and support.</p>
-        <p>We are a parent company that <strong>builds products, nurtures platforms,</strong> and supports early-stage ventures — the scaffolding that holds big ideas upright while they grow.</p>
-        <p>From SaaS tools to community platforms and tech ecosystems, Brivent operates at the intersection of vision and execution.</p>
-        <a href="#contact" class="bp" style="margin-top:26px">Work With Us <i class="fa-solid fa-arrow-right fa-sm"></i></a>
-      </div>
-      <div class="vals">
-        <div class="val reveal d1"><div class="v-ico"><i class="fa-solid fa-bullseye"></i></div><h4>Clarity</h4><p>Every idea and builder we work with gets the clear direction they need to move forward with certainty.</p></div>
-        <div class="val reveal d2"><div class="v-ico"><i class="fa-solid fa-bolt"></i></div><h4>Integrity</h4><p>We work on every idea with intentionality, holding our standards high throughout every collaboration.</p></div>
-        <div class="val reveal d3"><div class="v-ico"><i class="fa-solid fa-shield-halved"></i></div><h4>Trust</h4><p>Trust is essential to build and execute every idea. We protect and champion what we commit to.</p></div>
-        <div class="val reveal d4"><div class="v-ico"><i class="fa-solid fa-arrow-trend-up"></i></div><h4>Growth</h4><p>Forward momentum is embedded into every product and partnership we forge — always moving up.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
+<!-- ABOUT with stock image -->
+<section class="ab-sec" id="about"><div class="container"><div class="stag reveal">About Brivent</div><div class="ab-grid"><div class="ab-body reveal"><h2 class="sec-h" style="margin-bottom:26px">Structure for<br><span class="acc">Ambition.</span></h2><p>Brivent was created from observing <strong>talented people, communities, and ideas</strong> struggle — not because they lacked ability, but because they lacked direction and support.</p><p>We are a parent company that <strong>builds products, nurtures platforms,</strong> and supports early-stage ventures — the scaffolding that holds big ideas upright while they grow.</p><p>From SaaS tools to community platforms and tech ecosystems, Brivent operates at the intersection of vision and execution.</p><a href="#contact" class="bp" style="margin-top:26px">Work With Us <i class="fa-solid fa-arrow-right fa-sm"></i></a></div><div class="ab-visual reveal d2"><img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80" alt="Team collaboration"></div></div><div class="vals"><div class="val reveal d1"><div class="v-ico"><i class="fa-solid fa-bullseye"></i></div><h4>Clarity</h4><p>Every idea and builder gets clear direction.</p></div><div class="val reveal d2"><div class="v-ico"><i class="fa-solid fa-bolt"></i></div><h4>Integrity</h4><p>Intentional work, high standards.</p></div><div class="val reveal d3"><div class="v-ico"><i class="fa-solid fa-shield-halved"></i></div><h4>Trust</h4><p>We protect and champion commitments.</p></div><div class="val reveal d4"><div class="v-ico"><i class="fa-solid fa-arrow-trend-up"></i></div><h4>Growth</h4><p>Forward momentum in every product.</p></div></div></div></section>
 <div class="divider"></div>
 
 <!-- SERVICES -->
-<section class="sv-sec" id="services">
-  <div class="container">
-    <div class="sv-head">
-      <div class="stag reveal">What We Do</div>
-      <h2 class="sec-h reveal">Building <span class="acc">Systems</span><br>That Scale.</h2>
-    </div>
-    <div class="sv-grid reveal">
-      <div class="sv-item"><div class="sv-n">01</div><div class="sv-ico"><i class="fa-solid fa-layer-group"></i></div><h3>Product Development</h3><p>We conceive, design, and build digital products from the ground up — with a relentless focus on usability, performance, and real market fit.</p><span class="sv-more">Explore <i class="fa-solid fa-arrow-right fa-xs"></i></span></div>
-      <div class="sv-item"><div class="sv-n">02</div><div class="sv-ico"><i class="fa-solid fa-people-group"></i></div><h3>Community Building</h3><p>Great products need great communities. We build ecosystems where builders, founders, and students connect, collaborate, and compound their growth.</p><span class="sv-more">Explore <i class="fa-solid fa-arrow-right fa-xs"></i></span></div>
-      <div class="sv-item"><div class="sv-n">03</div><div class="sv-ico"><i class="fa-solid fa-lightbulb"></i></div><h3>Startup Support</h3><p>We serve as a parenting ecosystem for early-stage ideas — providing clarity, direction, mentorship, and the infrastructure to turn vision into traction.</p><span class="sv-more">Explore <i class="fa-solid fa-arrow-right fa-xs"></i></span></div>
-    </div>
-  </div>
-</section>
-
+<section class="sv-sec" id="services"><div class="container"><div class="sv-head"><div class="stag reveal">What We Do</div><h2 class="sec-h reveal">Building <span class="acc">Systems</span><br>That Scale.</h2></div><div class="sv-grid reveal"><div class="sv-item"><div class="sv-n">01</div><div class="sv-ico"><i class="fa-solid fa-layer-group"></i></div><h3>Product Development</h3><p>We conceive, design, and build digital products with relentless focus on usability and market fit.</p><span class="sv-more">Explore <i class="fa-solid fa-arrow-right fa-xs"></i></span></div><div class="sv-item"><div class="sv-n">02</div><div class="sv-ico"><i class="fa-solid fa-people-group"></i></div><h3>Community Building</h3><p>We build ecosystems where builders, founders, and students connect and compound their growth.</p><span class="sv-more">Explore <i class="fa-solid fa-arrow-right fa-xs"></i></span></div><div class="sv-item"><div class="sv-n">03</div><div class="sv-ico"><i class="fa-solid fa-lightbulb"></i></div><h3>Startup Support</h3><p>Parenting ecosystem for early-stage ideas — providing clarity, direction, and infrastructure.</p><span class="sv-more">Explore <i class="fa-solid fa-arrow-right fa-xs"></i></span></div></div></div><img class="sv-bg-deco" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&q=70" alt="tech pattern"></section>
 <div class="divider"></div>
 
-<!-- PRODUCTS -->
-<section class="pr-sec" id="products">
-  <div class="container">
-    <div class="pr-head">
-      <div>
-        <div class="stag reveal">Our Portfolio</div>
-        <h2 class="sec-h reveal">Products &amp;<br><span class="acc">Ventures.</span></h2>
-      </div>
-      <p class="pr-sub reveal">Each product in the Brivent ecosystem is built with intention — solving real problems for real builders.</p>
-    </div>
-    <div class="pr-grid">
-
-      <!-- WhatsApp Automation -->
-      <div class="pc feat reveal d1">
-        <div class="pt">
-          <img class="pli" src="wa-logo.png" alt="WA Automation"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="pif ib" style="display:none"><i class="fa-brands fa-whatsapp"></i></div>
-          <span class="pb2 live">Live</span>
-        </div>
-        <div class="pb">
-          <h3>WhatsApp Automation</h3>
-          <p>A SaaS platform that helps businesses automate their WhatsApp workflows — from customer support to lead nurturing and transactional messaging at scale.</p>
-          <div class="ptgs"><span class="ptg">SaaS</span><span class="ptg">Automation</span><span class="ptg">Business Tools</span></div>
-          <a href="#contact" class="plk">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></a>
-        </div>
-      </div>
-
-      <!-- Kinnoc -->
-      <div class="pc reveal d2">
-        <div class="pt">
-          <img class="pli" src="kinnoc.png" alt="Kinnoc"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="pif iv" style="display:none"><i class="fa-solid fa-link"></i></div>
-          <span class="pb2 build">Building</span>
-        </div>
-        <div class="pb">
-          <h3>Kinnoc</h3>
-          <p>A community and connection platform designed to bridge people, ideas, and opportunities — where meaningful networks are built and sustained over time.</p>
-          <div class="ptgs"><span class="ptg">Platform</span><span class="ptg">Community</span><span class="ptg">Networking</span></div>
-          <a href="#contact" class="plk">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></a>
-        </div>
-      </div>
-
-      <!-- BIIT -->
-      <div class="pc reveal d3">
-        <div class="pt">
-          <img class="pli" src="biit.png" alt="BIIT"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="pif ir" style="display:none"><i class="fa-solid fa-microchip"></i></div>
-          <span class="pb2 beta">Beta</span>
-        </div>
-        <div class="pb">
-          <h3>BIIT</h3>
-          <p>Brivent's tech community for builders, developers, and innovators. A space where technical talent converges to collaborate, learn, and build the future together.</p>
-          <div class="ptgs"><span class="ptg">Tech Community</span><span class="ptg">Builders</span><span class="ptg">Education</span></div>
-          <a href="#contact" class="plk">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
+<!-- PRODUCTS with Unsplash images -->
+<section class="pr-sec" id="products"><div class="container"><div class="pr-head"><div><div class="stag reveal">Our Portfolio</div><h2 class="sec-h reveal">Products &amp;<br><span class="acc">Ventures.</span></h2></div><p class="pr-sub reveal">Each product in the Brivent ecosystem is built with intention — solving real problems for real builders.</p></div><div class="pr-grid"><div class="pc feat reveal d1"><div class="pt"><img class="pli" src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=80&h=80&fit=crop" alt="WA"><span class="pb2 live">Live</span></div><div class="pb"><h3>WhatsApp Automation</h3><p>A SaaS platform that helps businesses automate WhatsApp workflows — from customer support to lead nurturing.</p><div class="ptgs"><span class="ptg">SaaS</span><span class="ptg">Automation</span></div><a href="#contact" class="plk">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></a></div></div><div class="pc reveal d2"><div class="pt"><img class="pli" src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=80&h=80&fit=crop" alt="Kinnoc"><span class="pb2 build">Building</span></div><div class="pb"><h3>Kinnoc</h3><p>A community and connection platform designed to bridge people, ideas, and opportunities.</p><div class="ptgs"><span class="ptg">Platform</span><span class="ptg">Community</span></div><a href="#contact" class="plk">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></a></div></div><div class="pc reveal d3"><div class="pt"><img class="pli" src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=80&h=80&fit=crop" alt="BIIT"><span class="pb2 beta">Beta</span></div><div class="pb"><h3>BIIT</h3><p>Brivent's tech community for builders, developers, and innovators. Collaborate and build the future.</p><div class="ptgs"><span class="ptg">Tech Community</span><span class="ptg">Builders</span></div><a href="#contact" class="plk">Learn More <i class="fa-solid fa-arrow-right fa-xs"></i></a></div></div></div></div></section>
 <div class="divider"></div>
 
 <!-- VISION -->
-<section class="vi-sec">
-  <div class="container">
-    <div class="vi-grid">
-      <div class="vi-l reveal">
-        <div class="stag">Our Direction</div>
-        <h2>Vision &amp;<br><span style="color:var(--persian)">Mission.</span></h2>
-        <p style="margin-top:18px">We are building towards a world where ambition is never left unsupported — where every talented founder, student, and builder has the structure, tools, and community they need to succeed.</p>
-      </div>
-      <div class="mis reveal d2">
-        <div class="mi"><div class="mi-ico"><i class="fa-solid fa-earth-africa"></i></div><div class="mi-b"><h4>Our Vision</h4><p>To become the foundational infrastructure layer powering the next generation of scalable systems and companies across Africa and beyond.</p></div></div>
-        <div class="mi"><div class="mi-ico"><i class="fa-solid fa-crosshairs"></i></div><div class="mi-b"><h4>Our Mission</h4><p>To give structure to ambition by building products, supporting ideas, and creating ecosystems that bridge the gap between potential and execution.</p></div></div>
-        <div class="mi"><div class="mi-ico"><i class="fa-solid fa-gem"></i></div><div class="mi-b"><h4>Our Promise</h4><p>Every idea that enters the Brivent ecosystem is worked on with intentionality, clarity, and an unwavering commitment to forward growth.</p></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
+<section class="vi-sec"><div class="container"><div class="vi-grid"><div class="vi-l reveal"><div class="stag">Our Direction</div><h2>Vision &amp;<br><span style="color:var(--persian)">Mission.</span></h2><p style="margin-top:18px">We are building towards a world where ambition is never left unsupported — where every talented founder, student, and builder has the structure, tools, and community they need to succeed.</p></div><div class="mis reveal d2"><div class="mi"><div class="mi-ico"><i class="fa-solid fa-earth-africa"></i></div><div class="mi-b"><h4>Our Vision</h4><p>Foundational infrastructure powering the next generation of scalable systems across Africa and beyond.</p></div></div><div class="mi"><div class="mi-ico"><i class="fa-solid fa-crosshairs"></i></div><div class="mi-b"><h4>Our Mission</h4><p>Give structure to ambition by building products, supporting ideas, and creating ecosystems.</p></div></div><div class="mi"><div class="mi-ico"><i class="fa-solid fa-gem"></i></div><div class="mi-b"><h4>Our Promise</h4><p>Intentionality, clarity, and unwavering commitment to forward growth.</p></div></div></div></div></div><img class="vi-bg-img" src="https://images.unsplash.com/photo-1504805572947-c34aad5aedf7?w=600&q=70" alt="vision"></section>
 <div class="divider"></div>
 
-<!-- CONTACT -->
-<section class="ct-sec" id="contact">
-  <div class="container">
-    <div class="stag reveal">Get In Touch</div>
-    <h2 class="sec-h reveal">Let's Build<br><span class="acc">Together.</span></h2>
-    <div class="ct-grid">
-      <div class="ct-l reveal">
-        <h3>Have an idea worth building?</h3>
-        <p>Whether you're a founder looking for a strategic partner, a builder searching for an ecosystem, or a brand that needs direction — Brivent is ready to listen and act.</p>
-        <div class="ci"><div class="ci-i"><i class="fa-solid fa-envelope"></i></div><div class="ci-t"><span>Email</span><a href="mailto:admin@brivent.co">admin@brivent.co</a></div></div>
-        <div class="ci"><div class="ci-i"><i class="fa-solid fa-globe"></i></div><div class="ci-t"><span>Website</span><p>brivent.com.ng</p></div></div>
-        <div class="ci"><div class="ci-i"><i class="fa-solid fa-location-dot"></i></div><div class="ci-t"><span>Location</span><p>Nigeria · Remote Worldwide</p></div></div>
-        <div class="rb"><p><strong>Response time</strong>We typically respond within 24–48 hours. For urgent matters, reach out via email directly.</p></div>
-      </div>
-      <div class="cf reveal d2">
-        <h4>Send a Message</h4>
-        <div class="frow">
-          <div class="fg"><label>First Name</label><input type="text" placeholder="Caleb"></div>
-          <div class="fg"><label>Last Name</label><input type="text" placeholder="Okafor"></div>
-        </div>
-        <div class="fg"><label>Email Address</label><input type="email" placeholder="you@example.com"></div>
-        <div class="fg"><label>Topic</label>
-          <select>
-            <option>Select a topic</option>
-            <option>Product Inquiry</option>
-            <option>Partnership / Collaboration</option>
-            <option>Startup Support</option>
-            <option>Community (BIIT / Kinnoc)</option>
-            <option>General Question</option>
-          </select>
-        </div>
-        <div class="fg"><label>Message</label><textarea placeholder="Tell us about your idea, project, or question..."></textarea></div>
-        <button class="sb" onclick="submitForm(this)">Send Message <i class="fa-solid fa-paper-plane fa-sm"></i></button>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- CONTACT - Formspree Integration (Endpoint: https://formspree.io/f/mreozvne) -->
+<section class="ct-sec" id="contact"><div class="container"><div class="stag reveal">Get In Touch</div><h2 class="sec-h reveal">Let's Build<br><span class="acc">Together.</span></h2><div class="ct-grid"><div class="ct-l reveal"><h3>Have an idea worth building?</h3><p>Whether you're a founder looking for a strategic partner, a builder searching for an ecosystem, or a brand that needs direction — Brivent is ready to listen and act.</p><div class="ci"><div class="ci-i"><i class="fa-solid fa-envelope"></i></div><div class="ci-t"><span>Email</span><a href="mailto:hello@brivent.co">hello@brivent.co</a></div></div><div class="ci"><div class="ci-i"><i class="fa-solid fa-globe"></i></div><div class="ci-t"><span>Website</span><p>www.brivent.co</p></div></div><div class="ci"><div class="ci-i"><i class="fa-solid fa-location-dot"></i></div><div class="ci-t"><span>Location</span><p>Lagos, Nigeria · Remote Worldwide</p></div></div><div class="rb"><p><strong>Response time</strong>We typically respond within 24–48 hours. For urgent matters, reach out via email directly.</p></div></div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="container">
-    <div class="ft">
-      <div class="fb">
-        <a href="#home" class="n-logo">
-          <img src="logo.png" alt="Brivent"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-          <svg class="n-logo-svg" style="display:none" viewBox="0 0 48 48" fill="none">
-            <path d="M24 4L8 12V26C8 34.8 15.2 43 24 46C32.8 43 40 34.8 40 26V12L24 4Z" fill="#152bf9" fill-opacity=".88"/>
-            <path d="M14 28C14 28 17 34 24 35C31 34 34 28 34 28" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-            <circle cx="24" cy="22" r="3.5" fill="white"/>
-            <path d="M18 18L24 13L30 18" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
-          <span class="n-word">Brivent</span>
-        </a>
-        <p>Giving structure to ambition — building products, supporting ideas, and bridging potential with execution.</p>
-      </div>
-      <div class="fc"><h5>Company</h5><ul><li><a href="#home">Home</a></li><li><a href="#about">About Us</a></li><li><a href="#services">What We Do</a></li><li><a href="#contact">Contact</a></li></ul></div>
-      <div class="fc"><h5>Products</h5><ul><li><a href="#products">WA Automation</a></li><li><a href="#products">Kinnoc</a></li><li><a href="#products">BIIT</a></li></ul></div>
-      <div class="fc"><h5>Connect</h5><ul><li><a href="mailto:admin@brivent.co">admin@brivent.co</a></li><li><a href="#">brivent.com.ng</a></li><li><a href="#">Twitter / X</a></li><li><a href="#">LinkedIn</a></li></ul></div>
+<!-- Formspree Form - Integrated with all fields -->
+<div class="cf reveal d2">
+  <h4>Send a Message</h4>
+  <form id="contactForm" action="https://formspree.io/f/mreozvne" method="POST">
+    <div class="frow">
+      <div class="fg"><label>First Name</label><input type="text" name="first_name" placeholder="John" required></div>
+      <div class="fg"><label>Last Name</label><input type="text" name="last_name" placeholder="Doe" required></div>
     </div>
-    <div class="ftb">
-      <p>© 2025 Brivent. Built with <span>♥</span> for ambitious builders.</p>
-      <div class="soc">
-        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-      </div>
+    <div class="fg"><label>Email Address</label><input type="email" name="email" placeholder="you@example.com" required></div>
+    <div class="fg"><label>Topic</label>
+      <select name="topic" required>
+        <option value="">Select a topic</option>
+        <option value="Product Inquiry">Product Inquiry</option>
+        <option value="Partnership / Collaboration">Partnership / Collaboration</option>
+        <option value="Startup Support">Startup Support</option>
+        <option value="Community (BIIT / Kinnoc)">Community (BIIT / Kinnoc)</option>
+        <option value="General Question">General Question</option>
+      </select>
     </div>
-  </div>
-</footer>
+    <div class="fg"><label>Message</label><textarea name="message" placeholder="Tell us about your idea, project, or question..." required></textarea></div>
+    <!-- honeypot for spam prevention -->
+    <input type="text" name="_gotcha" style="display:none">
+    <button type="submit" class="sb" id="formSubmitBtn">Send Message <i class="fa-solid fa-paper-plane fa-sm"></i></button>
+    <div id="formStatus" style="margin-top:12px; font-size:.8rem; text-align:center;"></div>
+  </form>
+</div>
+</div></div></section>
+
+<footer><div class="container"><div class="ft"><div class="fb"><a href="#home" class="n-logo"><img src="brivent.png" alt="Brivent" style="height:44px; width:auto;"></a><p>Giving structure to ambition — building products, supporting ideas, and bridging potential with execution.</p></div><div class="fc"><h5>Company</h5><ul><li><a href="#home">Home</a></li><li><a href="#about">About Us</a></li><li><a href="#services">What We Do</a></li></ul></div><div class="fc"><h5>Products</h5><ul><li><a href="#products">WA Automation</a></li><li><a href="#products">Kinnoc</a></li><li><a href="#products">BIIT</a></li></ul></div><div class="fc"><h5>Connect</h5><ul><li><a href="mailto:hello@brivent.co">hello@brivent.co</a></li><li><a href="#">www.brivent.co</a></li></ul></div></div><div class="ftb"><p>© 2026 Brivent. Built with <span>♥</span> for ambitious builders.</p><div class="soc"><a href="#"><i class="fa-brands fa-x-twitter"></i></a><a href="#"><i class="fa-brands fa-linkedin-in"></i></a><a href="#"><i class="fa-brands fa-instagram"></i></a></div></div></div></footer>
 
 <script>
 /* CURSOR */
@@ -532,37 +336,70 @@ const cur=document.getElementById('cur'),curR=document.getElementById('curR');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
 (function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(loop);})();
-document.querySelectorAll('a,button,.pc,.val,.sv-item,.mi').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';cur.style.background='#ff110b';curR.style.width='48px';curR.style.height='48px';});
-  el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';cur.style.background='#152bf9';curR.style.width='36px';curR.style.height='36px';});
-});
+document.querySelectorAll('a,button,.pc,.val,.sv-item,.mi').forEach(el=>{el.addEventListener('mouseenter',()=>{cur.style.width='18px';cur.style.height='18px';cur.style.background='#ff110b';curR.style.width='48px';curR.style.height='48px';});el.addEventListener('mouseleave',()=>{cur.style.width='10px';cur.style.height='10px';cur.style.background='#152bf9';curR.style.width='36px';curR.style.height='36px';});});
 
 /* PARTICLES */
-const cv=document.getElementById('pc'),cx=cv.getContext('2d');
-let W,H,pts=[];
-function rsz(){W=cv.width=innerWidth;H=cv.height=innerHeight;}
-rsz();addEventListener('resize',rsz);
+const cv=document.getElementById('pc'),cx=cv.getContext('2d');let W,H,pts=[];
+function rsz(){W=cv.width=innerWidth;H=cv.height=innerHeight;}rsz();addEventListener('resize',rsz);
 class P{constructor(){this.r();}r(){this.x=Math.random()*W;this.y=Math.random()*H;this.s=Math.random()*1.3+.3;this.vx=(Math.random()-.5)*.36;this.vy=(Math.random()-.5)*.36;this.a=Math.random()*.42+.08;this.c=Math.random()>.72?'#ff110b':'#152bf9';this.ph=Math.random()*Math.PI*2;this.ps=Math.random()*.017+.004;}u(){this.x+=this.vx;this.y+=this.vy;this.ph+=this.ps;this.ca=this.a*(0.55+0.45*Math.sin(this.ph));if(this.x<0||this.x>W||this.y<0||this.y>H)this.r();}d(){cx.globalAlpha=this.ca;cx.fillStyle=this.c;cx.beginPath();cx.arc(this.x,this.y,this.s,0,Math.PI*2);cx.fill();}}
 for(let i=0;i<110;i++)pts.push(new P());
-function lines(){for(let i=0;i<pts.length;i++){for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<90){cx.globalAlpha=(1-d/90)*.065;cx.strokeStyle='#152bf9';cx.lineWidth=.4;cx.beginPath();cx.moveTo(pts[i].x,pts[i].y);cx.lineTo(pts[j].x,pts[j].y);cx.stroke();}}}}
+function lines(){for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<90){cx.globalAlpha=(1-d/90)*.065;cx.strokeStyle='#152bf9';cx.lineWidth=.4;cx.beginPath();cx.moveTo(pts[i].x,pts[i].y);cx.lineTo(pts[j].x,pts[j].y);cx.stroke();}}}
 (function loop(){cx.clearRect(0,0,W,H);lines();pts.forEach(p=>{p.u();p.d();});cx.globalAlpha=1;requestAnimationFrame(loop);})();
 
 /* NAV SCROLL */
-const navEl=document.getElementById('nav');
-addEventListener('scroll',()=>navEl.classList.toggle('scrolled',scrollY>60));
+const navEl=document.getElementById('nav');addEventListener('scroll',()=>navEl.classList.toggle('scrolled',scrollY>60));
 
 /* REVEAL */
-const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');}),{threshold:.1});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');}),{threshold:.1});document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
 /* MOBILE NAV */
-const mob=document.getElementById('mob'),ham=document.getElementById('ham');
-function toggleMob(){const o=mob.classList.toggle('open');ham.classList.toggle('open',o);document.body.style.overflow=o?'hidden':'';}
-function closeMob(){mob.classList.remove('open');ham.classList.remove('open');document.body.style.overflow='';}
-mob.addEventListener('click',e=>{if(e.target===mob)closeMob();});
+const mob=document.getElementById('mob'),ham=document.getElementById('ham');function toggleMob(){const o=mob.classList.toggle('open');ham.classList.toggle('open',o);document.body.style.overflow=o?'hidden':'';}function closeMob(){mob.classList.remove('open');ham.classList.remove('open');document.body.style.overflow='';}mob.addEventListener('click',e=>{if(e.target===mob)closeMob();});
 
-/* FORM */
-function submitForm(btn){btn.innerHTML='<i class="fa-solid fa-circle-check"></i> Sent! We\'ll be in touch.';btn.style.background='#166534';btn.disabled=true;setTimeout(()=>{btn.innerHTML='Send Message <i class="fa-solid fa-paper-plane fa-sm"></i>';btn.style.background='';btn.disabled=false;},4000);}
+/* FORMSPREE INTEGRATION - Handle form submission with loading state */
+const contactForm = document.getElementById('contactForm');
+const submitBtn = document.getElementById('formSubmitBtn');
+const formStatus = document.getElementById('formStatus');
+
+if(contactForm) {
+  contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Disable button and show loading
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+    formStatus.innerHTML = '';
+    
+    const formData = new FormData(contactForm);
+    
+    try {
+      const response = await fetch(contactForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+      
+      if(response.ok) {
+        formStatus.innerHTML = '<span style="color:#22c55e;">✓ Message sent successfully! We\'ll be in touch soon.</span>';
+        submitBtn.innerHTML = '<i class="fa-solid fa-circle-check"></i> Sent!';
+        contactForm.reset();
+        setTimeout(() => {
+          submitBtn.innerHTML = 'Send Message <i class="fa-solid fa-paper-plane fa-sm"></i>';
+          submitBtn.disabled = false;
+          formStatus.innerHTML = '';
+        }, 4000);
+      } else {
+        const data = await response.json();
+        formStatus.innerHTML = '<span style="color:#ff6b6b;">✗ Error: ' + (data.error || 'Something went wrong. Please try again.') + '</span>';
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Send Message <i class="fa-solid fa-paper-plane fa-sm"></i>';
+      }
+    } catch(error) {
+      formStatus.innerHTML = '<span style="color:#ff6b6b;">✗ Network error. Please check your connection and try again.</span>';
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Send Message <i class="fa-solid fa-paper-plane fa-sm"></i>';
+    }
+  });
+}
 
 /* TOUCH */
 if('ontouchstart' in window){cur.style.display='none';curR.style.display='none';document.body.style.cursor='auto';}
